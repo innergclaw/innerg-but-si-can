@@ -1,12 +1,15 @@
 import { LINES, STAGES } from "./lines.js";
+import { saveStory, shareStory, canShareFiles } from "./story.js";
 
 const $ = (s) => document.querySelector(s);
 const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const pad = (n) => String(n).padStart(2, "0");
 const pageUrl = (line) => `${location.origin}${location.pathname}#${line.slug}`;
-const shareUrl = (line) =>
-  "https://x.com/intent/post?text=" +
-  encodeURIComponent(`SI can't ${line.cant}, but it can ${line.can}\n\n${pageUrl(line)}`);
+const storyMeta = (line, i) => ({
+  index: i + 1,
+  total: LINES.length,
+  stage: `${STAGES[line.stage].n} ${STAGES[line.stage].name}`,
+});
 
 /* ---------- Method strip ---------- */
 $("#method-list").innerHTML = Object.values(STAGES)
@@ -16,7 +19,7 @@ $("#method-list").innerHTML = Object.values(STAGES)
 /* ---------- Hero ---------- */
 const hero = {
   panel: $("#hero-panel"), cant: $("#hero-cant"), can: $("#hero-can"), index: $("#hero-index"),
-  stage: $("#hero-stage"), source: $("#hero-source"), share: $("#hero-share"),
+  stage: $("#hero-stage"), source: $("#hero-source"),
 };
 let index = Math.floor(Math.random() * LINES.length);
 
@@ -28,7 +31,6 @@ function paint(line, i) {
   hero.source.innerHTML = line.link
     ? `<a class="pill" href="${line.link.href}" rel="noopener">${line.link.label}</a>`
     : `<span class="pill pill-muted">Starter line ~ INNERG INTEL draft</span>`;
-  hero.share.href = shareUrl(line);
 }
 
 function go(next, { push = true } = {}) {
@@ -57,12 +59,40 @@ addEventListener("keydown", (e) => {
 });
 addEventListener("hashchange", () => { const i = fromHash(); if (i >= 0 && i !== index) go(i, { push: false }); });
 
+const noteEl = $("#copy-note");
+function setNote(text) {
+  noteEl.textContent = text;
+  if (text) setTimeout(() => { if (noteEl.textContent === text) noteEl.textContent = ""; }, 2800);
+}
+
 $("#hero-copy").addEventListener("click", async () => {
-  const note = $("#copy-note");
-  try { await navigator.clipboard.writeText(pageUrl(LINES[index])); note.textContent = "Link copied"; }
-  catch { note.textContent = "Copy failed, use the address bar"; }
-  setTimeout(() => (note.textContent = ""), 2400);
+  try { await navigator.clipboard.writeText(pageUrl(LINES[index])); setNote("Link copied"); }
+  catch { setNote("Copy failed, use the address bar"); }
 });
+
+async function withStory(fn, busyLabel, doneLabel) {
+  const saveBtn = $("#hero-save");
+  const shareBtn = $("#hero-share");
+  if (saveBtn.disabled) return;
+  saveBtn.disabled = true;
+  shareBtn.disabled = true;
+  setNote(busyLabel);
+  try {
+    await fn(LINES[index], storyMeta(LINES[index], index));
+    setNote(doneLabel);
+  } catch (err) {
+    if (err && err.name === "AbortError") setNote("");
+    else setNote("Could not make the story image.");
+  } finally {
+    saveBtn.disabled = false;
+    shareBtn.disabled = false;
+  }
+}
+
+$("#hero-save").addEventListener("click", () => withStory(saveStory, "Making the story image", "Story image saved"));
+$("#hero-share").addEventListener("click", () => withStory(shareStory, "Making the story image", "Share sheet opened"));
+
+if (canShareFiles()) $("#hero-share").hidden = false;
 
 const start = fromHash();
 paint(LINES[start >= 0 ? start : index], start >= 0 ? (index = start) : index);
