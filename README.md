@@ -11,3 +11,5 @@ Static site. No build step. Open `index.html` through any static server, for exa
 - `assets/seal.jpg` ~ official seal from innerg-pulse
 
 Status: preview only. No custom domain. Not announced. `noindex` is set.
+
+Intended custom domain: can.innergintel.study (GitHub Pages). Keep noindex and starter-line draft labels until Mr G says otherwise.
