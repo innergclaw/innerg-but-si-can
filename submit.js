@@ -7,15 +7,21 @@ function preview() {
   pvCant.textContent = clean(cant.value) || "...";
   pvCan.textContent = clean(can.value) || "...";
 }
+function lineText() {
+  return `SI can't ${clean(cant.value)}, but it can ${clean(can.value)}\n\n${stage.value} ~ But SI Can`;
+}
 f.addEventListener("input", preview);
-f.addEventListener("submit", (e) => {
+f.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!cant.value.trim() || !can.value.trim()) {
     note.textContent = "Fill in both halves of the line.";
     (cant.value.trim() ? can : cant).focus();
     return;
   }
-  const text = `SI can't ${clean(cant.value)}, but it can ${clean(can.value)}\n\n${stage.value} ~ @InnerGIntel`;
-  window.open("https://x.com/intent/post?text=" + encodeURIComponent(text), "_blank", "noopener");
-  note.textContent = "Your X draft opened in a new tab. Post it there if you want it considered.";
+  try {
+    await navigator.clipboard.writeText(lineText());
+    note.textContent = "Line copied. Paste it into a message to INNERG INTEL. This page does not send it.";
+  } catch {
+    note.textContent = "Copy failed. Select the preview and copy it yourself.";
+  }
 });
