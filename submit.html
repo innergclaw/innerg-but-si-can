@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submit a line ~ But SI Can</title>
+  <meta name="description" content="SI can't do it for you, but it can help you do it. A wall of real-world lines from INNERG INTEL: Deprogram, Relearn, Recode, Rebuild.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F3EBDD">
+  <meta property="og:title" content="But SI Can ~ INNERG INTEL">
+  <meta property="og:description" content="SI can't do it for you, but it can help you do it.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/seal-80.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..900,0..100&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="But SI Can, home">
+        <img class="seal" src="assets/seal.jpg" alt="" width="52" height="52">
+        <span class="wordmark">But SI <span class="mark-can">can</span></span>
+      </a>
+      <nav class="header-links" aria-label="INNERG INTEL">
+        <a class="box-link" href="submit.html">Submit a line</a>
+        <a class="box-link" href="https://nasirr.innergintel.study/" rel="noopener">The hub</a>
+      </nav>
+    </div>
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker-track">
+        <span>Learn the system</span><span>Recode the mind</span><span>Build the future</span><span>Deprogram</span><span>Relearn</span><span>Recode</span><span>Rebuild</span>
+        <span>Learn the system</span><span>Recode the mind</span><span>Build the future</span><span>Deprogram</span><span>Relearn</span><span>Recode</span><span>Rebuild</span>
+      </div>
+    </div>
+    <div class="wrap ticker-ctl"><button type="button" class="mini-btn" id="ticker-toggle">Pause ticker</button></div>
+  </header>
+
+  <main id="main">
+    <div class="wrap form-wrap">
+      <p class="kicker"><a class="text-link" href="./">&larr; Back to the wall</a></p>
+      <h1 class="panel-title">Submit a line</h1>
+      <p class="invite">One line from your own life. What SI can't do for you, and what it can.</p>
+      <form class="form-card" id="line-form" novalidate style="margin-top:24px">
+        <p class="placeholder-flag">Placeholder for Mr G: there is no submission inbox yet. For now this opens a ready-to-post X draft tagged @InnerGIntel. Nothing is sent until you post it yourself.</p>
+        <div class="field">
+          <label for="cant">SI can't</label>
+          <input id="cant" name="cant" required maxlength="90" placeholder="read the book for you" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="can">but it can</label>
+          <input id="can" name="can" required maxlength="140" placeholder="turn it into five questions you answer in your own words." autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="stage">Method stage</label>
+          <select id="stage" name="stage">
+            <option value="Deprogram">01 Deprogram</option>
+            <option value="Relearn">02 Relearn</option>
+            <option value="Recode">03 Recode</option>
+            <option value="Rebuild">04 Rebuild</option>
+          </select>
+        </div>
+        <p class="hint">Preview</p>
+        <p class="preview" id="preview" aria-live="polite">SI <span class="w-cant">can't</span> <span id="pv-cant">...</span>, but it <span class="w-can">can</span> <span id="pv-can">...</span></p>
+        <button class="solid-btn" type="submit">Open my X draft</button>
+        <p class="hint" id="form-note" role="status" style="margin-top:12px"></p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="tagline">Learn the system. Recode the mind. Build the future.</p>
+      <p class="no">No. 001 &bull; INNERG INTEL &bull; 2026</p>
+    </div>
+  </footer>
+  <script type="module" src="submit.js"></script>
+</body>
+</html>
